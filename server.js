@@ -6,7 +6,14 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.post("/line", (req, res) => {
-    console.log("LINE Webhook received:", req.body);
+    const body = req.body;
+    console.log("Received body:", JSON.stringify(body, null, 2));
+
+    if (body.events && body.events.length > 0) {
+        const userId = body.events[0].source.userId;
+        console.log("★ KazumaのUID:", userId);
+    }
+
     res.sendStatus(200);
 });
 
